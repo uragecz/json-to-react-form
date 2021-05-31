@@ -24,7 +24,7 @@ npm install --save json-to-react-form
 
 ```tsx
 // registrationForm.json
-[
+;[
   {
     component: 'TextInput',
     name: 'email',
@@ -71,7 +71,13 @@ const Registration = () => {
   const handleRegister = (values: any) => {
     // do something here
   }
-  return <Form layout={[2, 8]} inputs={registrationInputs} onSubmit={handleRegister} />
+  return (
+    <Form
+      layout={[2, 8]}
+      inputs={registrationInputs}
+      onSubmit={handleRegister}
+    />
+  )
 }
 ```
 
@@ -84,19 +90,19 @@ import Form, { InputFormProps } from 'json-to-react-form'
 import registrationInputs from './registrationForm'
 
 interface Props {
-	// This property is injected by our library
-	formProps: InputFormProps
+  // This property is injected by our library
+  formProps: InputFormProps
 }
 
 const TextInput = ({ formProps, ...componentProps }: Props) => {
-	const { inputProps, form } = formProps
+  const { inputProps, form } = formProps
   const { name } = inputProps
-  const error = form.formState.errors[name];
+  const error = form.formState.errors[name]
   return (
     <div>
-		  <input {...inputProps} />
+      <input {...inputProps} />
       {!!error && <span>{error}</span>}
-		</div>
+    </div>
   )
 }
 
@@ -109,7 +115,7 @@ const Registration = () => {
       layout={[2, 8]}
       inputs={registrationInputs}
       onSubmit={handleRegister}
-      components={ TextInput }
+      components={TextInput}
     />
   )
 }
