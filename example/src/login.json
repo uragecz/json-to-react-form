@@ -1,0 +1,73 @@
+[
+  {
+    "component": "TextInput",
+    "name": "email",
+    "order": 0,
+    "label": "E-mail:",
+    "labelPosition": "top",
+    "type": "email",
+    "validation": {
+      "required": "Toto pole je povinné"
+    }
+  },
+  {
+    "component": "TextInput",
+    "name": "password",
+    "order": 1,
+    "label": "Heslo:",
+    "type": "password",
+    "validation": {
+      "required": "Toto pole je povinné"
+    }
+  },
+  {
+    "component": "SelectInput",
+    "name": "contact",
+    "type": "select",
+    "order": 1.01,
+    "label": "Kontaktní osoba",
+    "options": [
+      { "label": "Ano", "value": "yes" },
+      { "label": "Ne", "value": "no" }
+    ],
+    "componentProps": {},
+    "customProps": {},
+    "validation": {
+      "required": "Toto pole je povinné"
+    }
+  },
+  {
+    "component": "TextArea",
+    "name": "text",
+    "labelPosition": "top",
+    "order": 1.02,
+    "label": "Text recenze"
+  },
+  {
+    "component": "Checkbox",
+    "name": "save",
+    "order": 1.1,
+    "label": "Ulozit:"
+  },
+  {
+    "order": 2,
+    "align": "center",
+    "children": [
+      {
+        "component": "Button",
+        "name": "forgottenPassword",
+        "order": 0,
+        "title": "Zapomenuté heslo",
+        "align": "center"
+      },
+      {
+        "component": "Button",
+        "name": "submit",
+        "align": "center",
+        "size": "medium",
+        "order": 1,
+        "title": "Přihlásit se"
+      }
+    ]
+  }
+]
