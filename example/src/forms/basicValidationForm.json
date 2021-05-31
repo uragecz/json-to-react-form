@@ -7,47 +7,38 @@
     "labelPosition": "top",
     "type": "email",
     "validation": {
-      "required": "Toto pole je povinné"
-    }
-  },
-  {
-    "component": "TextInput",
-    "name": "password",
-    "order": 1,
-    "label": "Heslo:",
-    "type": "password",
-    "validation": {
-      "required": "Toto pole je povinné"
+      "required": "This field is required"
     }
   },
   {
     "component": "SelectInput",
-    "name": "contact",
+    "name": "country",
     "type": "select",
     "order": 1.01,
-    "label": "Kontaktní osoba",
+    "label": "Country",
     "options": [
-      { "label": "Ano", "value": "yes" },
-      { "label": "Ne", "value": "no" }
+      { "label": "Czech Republic", "value": "cz" },
+      { "label": "Germany", "value": "de" }
     ],
+    "defaultValue": "yes",
     "componentProps": {},
     "customProps": {},
     "validation": {
-      "required": "Toto pole je povinné"
+      "required": "This field is required"
     }
   },
   {
     "component": "TextArea",
-    "name": "text",
+    "name": "info",
     "labelPosition": "top",
     "order": 1.02,
-    "label": "Text recenze"
+    "label": "More info"
   },
   {
     "component": "Checkbox",
-    "name": "save",
+    "name": "agreement",
     "order": 1.1,
-    "label": "Ulozit:"
+    "label": "GDPR"
   },
   {
     "order": 2,
@@ -55,18 +46,15 @@
     "children": [
       {
         "component": "Button",
-        "name": "forgottenPassword",
+        "name": "close",
         "order": 0,
-        "title": "Zapomenuté heslo",
-        "align": "center"
+        "title": "Close button"
       },
       {
         "component": "Button",
         "name": "submit",
-        "align": "center",
-        "size": "medium",
         "order": 1,
-        "title": "Přihlásit se"
+        "title": "Submit button"
       }
     ]
   }

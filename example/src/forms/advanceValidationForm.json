@@ -1,0 +1,51 @@
+[
+  {
+    "component": "TextInput",
+    "name": "currentPassword",
+    "order": 0,
+    "label": "Current password:",
+    "type": "password",
+    "validation": {
+      "required": "This field is required"
+    }
+  },
+  {
+    "component": "TextInput",
+    "name": "newPassword",
+    "order": 1,
+    "label": "New password:",
+    "type": "password",
+    "validation": {
+      "required": "This field is required",
+      "pattern": {
+        "value": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",
+        "message": "Password has to contain at least 8 letters and on number"
+      }
+    }
+  },
+  {
+    "component": "TextInput",
+    "name": "repeatNewPassword",
+    "order": 2,
+    "label": "Repeat new password:",
+    "type": "password",
+    "validation": {
+      "required": "This field is required",
+      "validate": {
+        "sameAs": {
+          "value": "newPassword",
+          "message": "Passwords have to be same"
+        }
+      }
+    }
+  },
+  {
+    "component": "Button",
+    "name": "submit",
+    "align": "center",
+    "type": "primary",
+    "size": "medium",
+    "order": 3,
+    "label": "Change password"
+  }
+]

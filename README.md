@@ -24,7 +24,7 @@ npm install --save json-to-react-form
 
 ```tsx
 // registrationForm.json
-;[
+[
   {
     component: 'TextInput',
     name: 'email',
@@ -94,7 +94,7 @@ interface Props {
   formProps: InputFormProps
 }
 
-const TextInput = ({ formProps, ...componentProps }: Props) => {
+const TextInput = ({ formProps }: Props) => {
   const { inputProps, form } = formProps
   const { name } = inputProps
   const error = form.formState.errors[name]
@@ -141,7 +141,7 @@ fields?: Record<'id', string>[]
 // This is needed only if fields prop is provided
 formName?: string
 
-// Layout for input and its label, default is [3,7].
+// Layout for input and its label, first value is size of label, second is input, default is [3,7].
 layout?: [number, number]
 
 // Defines breakpoint, when layout should be set for mobile / desktop, default is '52em'

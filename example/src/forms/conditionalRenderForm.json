@@ -1,0 +1,50 @@
+[
+  {
+    "component": "Checkbox",
+    "name": "otherDelivery",
+    "order": 0,
+    "label": "Other delivery",
+    "conditionalChildrenRender": true,
+    "children": [
+      {
+        "component": "TextInput",
+        "type": "text",
+        "name": "street",
+        "order": 0,
+        "validation": {
+          "required": "This field is required"
+        }
+      },
+      {
+        "component": "TextInput",
+        "type": "text",
+        "name": "city",
+        "order": 1,
+        "validation": {
+          "required": "This field is required"
+        }
+      },
+      {
+        "component": "TextInput",
+        "type": "text",
+        "name": "zipCode",
+        "order": 2,
+        "validation": {
+          "required": "This field is required"
+        }
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "align": "center",
+    "children": [
+      {
+        "component": "Button",
+        "name": "submit",
+        "order": 1,
+        "label": "Send order"
+      }
+    ]
+  }
+]

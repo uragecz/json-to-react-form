@@ -32,7 +32,6 @@ const FormInput = ({
     type,
     disabled,
     component,
-    name,
     validation,
     placeholder,
     hidden,
@@ -46,22 +45,28 @@ const FormInput = ({
   const inputName = input.name as string
 
   const getComponentProps = () => {
-    const input = register(inputName, getTransformedValidation(getValues, validation))
-    let inputProps: InputProps = {
-      placeholder,
-      type,
-      disabled: disabled === 'true',
-      ...input,
-      onChange: (e: ChangeEvent<HTMLInputElement>) => {
-        onInputChange?.(e.target.value, inputName);
-        input.onChange(e);
+    let inputProps: InputProps | {} = {};
+
+    // Button can't be registred
+    if(component !== 'Button'){
+      const input = register(inputName, getTransformedValidation(getValues, validation))
+      inputProps = {
+        placeholder,
+        type,
+        disabled: disabled === 'true',
+        defaultValue,
+        ...input,
+        onChange: (e: ChangeEvent<HTMLInputElement>) => {
+          onInputChange?.(e.target.value, inputName);
+          input.onChange(e);
+        }
       }
     }
+
     switch (component) {
       case 'Button': {
         return {
           buttonProps: {
-            name,
             type: type as 'submit' | 'button' | 'reset',
             disabled: disabled === 'true' || isSubmitLoading,
             title: title || '',
