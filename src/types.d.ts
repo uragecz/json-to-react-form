@@ -9,7 +9,7 @@ import {
 export type AdvanceValidation = (value: string) => string | true
 
 export type Validation = {
-  value: string
+  value: string,
   message: string
 };
 
@@ -77,7 +77,7 @@ export type LabelPosition = 'top' | 'left' | 'bottom' | 'right'
 
 export interface InputProps {
   onChange?: (
-    event: Option & React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
+    event: Option | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   placeholder?: string
   name: string

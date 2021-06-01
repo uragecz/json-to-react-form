@@ -45,11 +45,14 @@ const FormInput = ({
   const inputName = input.name as string
 
   const getComponentProps = () => {
-    let inputProps: InputProps | {} = {};
+    let inputProps: InputProps | {} = {}
 
     // Button can't be registred
-    if(component !== 'Button'){
-      const input = register(inputName, getTransformedValidation(getValues, validation))
+    if (component !== 'Button') {
+      const input = register(inputName, {
+        ...getTransformedValidation(getValues, validation),
+        shouldUnregister: true
+      })
       inputProps = {
         placeholder,
         type,
@@ -57,8 +60,11 @@ const FormInput = ({
         defaultValue,
         ...input,
         onChange: (e: ChangeEvent<HTMLInputElement>) => {
-          onInputChange?.(e.target.value, inputName);
-          input.onChange(e);
+          onInputChange?.(
+            component === 'Checkbox' ? e.target.checked : e.target.value,
+            inputName
+          )
+          input.onChange(e)
         }
       }
     }
@@ -71,8 +77,9 @@ const FormInput = ({
             disabled: disabled === 'true' || isSubmitLoading,
             title: title || '',
             isLoading: isSubmitLoading,
-            onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+            onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
               onButtonClick?.(e, inputName)
+            }
           }
         }
       }
@@ -80,8 +87,10 @@ const FormInput = ({
         return {
           inputProps: {
             ...inputProps,
-            onChange: (e: ChangeEvent<HTMLInputElement>) =>
-              onInputChange?.(e.target.value, inputName)
+            onChange: (e: ChangeEvent<HTMLInputElement>) => {
+              onInputChange?.(e.target.value, inputName);
+              (inputProps as InputProps).onChange?.(e)
+            }
           }
         }
       }
@@ -89,8 +98,10 @@ const FormInput = ({
         return {
           inputProps: {
             ...inputProps,
-            onChange: (e: ChangeEvent<HTMLTextAreaElement>) =>
-              onInputChange?.(e.target.value, inputName)
+            onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
+              onInputChange?.(e.target.value, inputName);
+              (inputProps as InputProps).onChange?.(e)
+            }
           }
         }
       }
@@ -98,8 +109,10 @@ const FormInput = ({
         return {
           inputProps: {
             ...inputProps,
-            onChange: (e: ChangeEvent<HTMLInputElement>) =>
-              onInputChange?.(e.target.checked, inputName)
+            onChange: (e: ChangeEvent<HTMLInputElement>) => {
+              onInputChange?.(e.target.checked, inputName);
+              (inputProps as InputProps).onChange?.(e)
+            }
           }
         }
       }
@@ -107,7 +120,10 @@ const FormInput = ({
         return {
           inputProps: {
             ...inputProps,
-            onChange: ({ value }: Option) => onInputChange?.(value, inputName),
+            onChange: (option: Option) => {
+              onInputChange?.(option.value, inputName);
+              (inputProps as InputProps).onChange?.(option)
+            },
             options
           }
         }

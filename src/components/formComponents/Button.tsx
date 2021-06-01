@@ -22,7 +22,6 @@ export default Button;
 
 const StyledButton = styled.button<{ customStyle: CustomStyle }>`
   display: flex;
-  width: 100%;
   padding: 1rem 2rem;
   align-items: center;
   justify-content: center;
@@ -35,6 +34,7 @@ const StyledButton = styled.button<{ customStyle: CustomStyle }>`
   border-color: ${({ customStyle }) => customStyle.buttonBorderColor};
   background-color: ${({ customStyle }) => customStyle.buttonBackgroundColor};
   color: ${({ customStyle }) => customStyle.buttonTextColor};
+  white-space: nowrap;
 
   &:hover {
     background-color: ${({ customStyle }) => darken(0.1, customStyle.buttonBackgroundColor as string)};

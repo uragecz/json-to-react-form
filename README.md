@@ -224,6 +224,7 @@ Button:
 
 ```tsx
 {
+  title?: string,
   type?: string | 'submit',
 }
 ```

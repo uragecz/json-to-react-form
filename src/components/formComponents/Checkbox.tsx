@@ -11,7 +11,6 @@ interface Props {
 const Checkbox = ({ formProps }: Props) => {
   const { inputProps, form, customStyle } = formProps
   const { label, name } = inputProps
-
   const error = form.formState.errors[name];
   return (
     <Label customStyle={customStyle}>

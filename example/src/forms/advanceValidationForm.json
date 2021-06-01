@@ -43,9 +43,7 @@
     "component": "Button",
     "name": "submit",
     "align": "center",
-    "type": "primary",
-    "size": "medium",
     "order": 3,
-    "label": "Change password"
+    "title": "Change password"
   }
 ]

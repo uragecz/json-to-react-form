@@ -2,7 +2,7 @@
   {
     "component": "Checkbox",
     "name": "otherDelivery",
-    "order": 0,
+    "order": 0.1,
     "label": "Other delivery",
     "conditionalChildrenRender": true,
     "children": [
@@ -36,15 +36,9 @@
     ]
   },
   {
+    "component": "Button",
+    "name": "submit",
     "order": 1,
-    "align": "center",
-    "children": [
-      {
-        "component": "Button",
-        "name": "submit",
-        "order": 1,
-        "label": "Send order"
-      }
-    ]
+    "title": "Send order"
   }
 ]
