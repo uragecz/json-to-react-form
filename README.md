@@ -4,7 +4,7 @@
 
 [![NPM](https://img.shields.io/npm/v/json-to-react-form.svg)](https://www.npmjs.com/package/json-to-react-form) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-[React](https://reactjs.org/) form component, that allows to easily generate form fields from json file using [react-hook-form](https://react-hook-form.com/) library. Including validations, and high customization.
+[React](https://reactjs.org/) form component, that allows to easily generate form inputs from json file using [react-hook-form](https://react-hook-form.com/) library. Including validations, and high customization. By default we provide high level select input - [react-select](https://react-select.com/home)
 
 ## Install
 
@@ -198,6 +198,8 @@ customStyle?: {
   order?: number,
   label?: string,
   labelPosition?: 'top' | 'left' | 'bottom' | 'right',
+  // align-items for inputs inside "children"
+  align?: 'flex-start' | 'flex-end' | 'space-between' | 'center',
   type?: string,
   defaultValue?: any,
   validation?: Validation,
