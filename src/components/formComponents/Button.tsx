@@ -9,8 +9,7 @@ interface Props {
 }
 
 const Button = ({ formProps }: Props) => {
-  const { buttonProps, customStyle } = formProps;
-  const { title } = buttonProps;
+  const { buttonProps, customStyle, title } = formProps;
   return (
     <StyledButton customStyle={customStyle} {...buttonProps}>
       <Text>{title}</Text>

@@ -121,6 +121,8 @@ interface FormProps {
 
 export interface ButtonFormProps extends FormProps {
   buttonProps: ButtonProps
+  title?: string;
+  isLoading: boolean;
 }
 
 export interface InputFormProps extends FormProps {

@@ -15,7 +15,7 @@ const TextInput = ({ formProps }: Props) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { inputProps, form, customStyle } = formProps
   const { type, name } = inputProps
-  const error = form.formState.errors[name];
+  const error = form.formState.errors[name]
   return (
     <Flex flex={1} position='relative'>
       <StyledInput
@@ -65,11 +65,11 @@ const StyledInput = styled.input<{ error: boolean; customStyle: CustomStyle }>`
       error
         ? customStyle.errorColor
         : darken(0.1, customStyle.inputBorderColor as string)};
-
   }
 
   &:focus {
-    border-color: ${({ customStyle }) => darken(0.1, customStyle.inputBorderColor as string)};
+    border-color: ${({ customStyle }) =>
+      darken(0.1, customStyle.inputBorderColor as string)};
   }
 
   border-radius: ${({ customStyle }) => customStyle.borderRadius};
@@ -92,7 +92,8 @@ const ShowPasswordButton = styled.button<{ customStyle: CustomStyle }>`
   svg {
     width: 20px;
     height: 20px;
-    fill: ${({ customStyle }) => darken(0.5, customStyle.inputBorderColor as string)};
+    fill: ${({ customStyle }) =>
+      darken(0.5, customStyle.inputBorderColor as string)};
   }
 `
 
