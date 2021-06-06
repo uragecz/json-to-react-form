@@ -23,20 +23,20 @@ export type Item = Partial<Input> & {
   title?: string
   conditionalChildrenRender?: boolean
   children?: Item[]
-  hidden?: string
-  component?: string
 }
 
 export type Input = {
-  name: string
+  name?: string
   defaultValue?: string | number
   disabled?: string
-  type: string
+  type?: string
   placeholder?: string
   validation?: Validations
   align?: string
   unit?: string
   title?: string
+  component: string
+  hidden?: string
 
   // for select
   options?: GroupOption[] | Option[] | undefined;
@@ -76,8 +76,8 @@ interface GroupOption {
 export type LabelPosition = 'top' | 'left' | 'bottom' | 'right'
 
 export interface InputProps {
-  onChange?: (
-    event: Option | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  onChange: (
+    event: Option | Date | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLDivElement | HTMLSelectElement>
   ) => void
   placeholder?: string
   name: string

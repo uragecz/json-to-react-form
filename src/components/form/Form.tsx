@@ -17,6 +17,7 @@ import Checkbox from '../formComponents/Checkbox'
 import Button from '../formComponents/Button'
 import TextArea from '../formComponents/TextArea'
 import Title from '../formComponents/Title'
+import DatePicker from '../formComponents/DatePicker'
 import style from '../../style'
 
 const mapFormInput = {
@@ -25,7 +26,8 @@ const mapFormInput = {
   Checkbox,
   Button,
   TextArea,
-  Title
+  Title,
+  DatePicker
 }
 
 interface Props {
@@ -43,6 +45,7 @@ interface Props {
   components?: {
     TextInput?: FunctionComponent<InputFormProps>
     SelectInput?: FunctionComponent<InputFormProps>
+    DatePicker?: FunctionComponent<InputFormProps>
     Checkbox?: FunctionComponent<InputFormProps>
     Button?: FunctionComponent<ButtonFormProps>
     TextArea?: FunctionComponent<InputFormProps>
@@ -138,7 +141,7 @@ const Form = ({
           onInputChange={onInputChange}
           onButtonClick={onButtonClick}
           input={{
-            ...input,
+            ...input as Input,
             ...getInputPropsForRepeatableForm(
               input.name as string,
               formIndex,
@@ -174,7 +177,7 @@ const Form = ({
         return (
           <React.Fragment key={`${item.name}${item.label}_${index}`}>
             {renderInput(item as Input, formIndex, formField)}
-            {watchers[(item as Input).name]
+            {watchers[(item as Input).name as string]
               ? renderChildren(item.children, formIndex, formField)
               : null}
           </React.Fragment>

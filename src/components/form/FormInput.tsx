@@ -1,11 +1,16 @@
 import React, { ChangeEvent } from 'react'
-import { Controller, FieldValues, UseFormReturn } from 'react-hook-form'
 import {
-  getOnlyButtontProps,
-  getOnlyInputProps,
-  getTransformedValidation
-} from '../../helpers'
-import { CustomStyle, Item, InputProps, GroupOption, Option } from '../../types'
+  Controller,
+  ControllerRenderProps,
+  FieldValues,
+  UseFormReturn
+} from 'react-hook-form'
+import { getTransformedValidation } from '../../helpers'
+import {
+  getSelectDefaultValue,
+  getSelectSelectedValue
+} from '../../inputHelpers'
+import { CustomStyle, Option, Input } from '../../types'
 import Flex from '../Flex'
 import Title from '../formComponents/Title'
 
@@ -16,7 +21,7 @@ interface Props {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     name: string
   ) => void
-  input: Item
+  input: Input
   form: UseFormReturn<FieldValues>
   customStyle: CustomStyle
   isSubmitLoading?: boolean
@@ -36,6 +41,9 @@ const FormInput = ({
     component,
     validation,
     hidden,
+    placeholder,
+    type,
+    disabled,
     title,
     options,
     defaultValue,
@@ -43,94 +51,130 @@ const FormInput = ({
     customProps
   } = input
   const inputName = input.name as string
+  const basicInputProps = {
+    placeholder,
+    type,
+    name: inputName,
+    disabled: disabled === 'true',
+    defaultValue,
+    ...input
+  }
 
-  const getInputProps = (skipRegister?: boolean) => {
-    const formInputProps: InputProps | {} = !skipRegister
-      ? register(inputName, getTransformedValidation(getValues, validation))
-      : {}
-    return {
-      ...getOnlyInputProps(input),
-      ...formInputProps,
-      onChange: (e: ChangeEvent<HTMLInputElement>) => {
-        onInputChange?.(
-          component === 'Checkbox' ? e.target.checked : e.target.value,
-          inputName
-        )
-        ;(formInputProps as InputProps).onChange?.(e)
-      }
+  const getControlledComponentProps = (
+    fields: ControllerRenderProps<FieldValues, string>
+  ) => {
+    switch (component) {
+      case 'SelectInput':
+        return {
+          ...basicInputProps,
+          ...fields,
+          type: basicInputProps.type || "select",
+          onChage: (e: React.ChangeEvent<HTMLSelectElement> | Option) => {
+            fields.onChange(e)
+            onInputChange?.(getSelectSelectedValue(e), inputName)
+          }
+        }
+      case 'DatePicker':
+        return {
+          ...basicInputProps,
+          ...fields,
+          type: basicInputProps.type || "date",
+          onChage: (date: Date) => {
+            fields.onChange(date)
+            onInputChange?.(date, inputName)
+          }
+        }
+      default:
+        return {}
     }
   }
 
-  const getComponentProps = () => {
-    switch (component) {
-      case 'Button': {
-        const buttonProps = getOnlyButtontProps(input)
-        return {
-          buttonProps: {
-            ...buttonProps,
-            disabled: buttonProps.disabled || !!isSubmitLoading,
-            onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-              onButtonClick?.(e, inputName)
-            }
-          },
-          title: title,
-          isLoading: !!isSubmitLoading
-        }
-      }
-      // other inputs have same props
-      default: {
-        return {
-          inputProps: {
-            ...getInputProps()
+  const getBasicComponentProps = () => {
+    // Button component shouldn't be registred
+    if (component === 'Button') {
+      return {
+        buttonProps: {
+          ...basicInputProps,
+          disabled: basicInputProps.disabled || isSubmitLoading,
+          title: title || '',
+          isLoading: isSubmitLoading,
+          onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            onButtonClick?.(e, inputName)
           }
         }
       }
     }
-  }
 
-  const getSelectDefaultValue = () => {
-    let selectedValue: Option | null | undefined = null
-    if (options?.length && defaultValue) {
-      // if it's grouped options
-      if ((options[0] as GroupOption).options) {
-        ;(options as GroupOption[]).map((o) => {
-          o.options.map((item) => {
-            if (item.value === defaultValue) {
-              selectedValue = item
+    const formInputProps = register(inputName, {
+      ...getTransformedValidation(getValues, validation),
+      shouldUnregister: true
+    })
+
+    switch (component) {
+      case 'TextInput': {
+        return {
+          inputProps: {
+            ...formInputProps,
+            onChange: (e: ChangeEvent<HTMLInputElement>) => {
+              onInputChange?.(e.target.value, inputName)
+              formInputProps.onChange(e)
             }
-          })
-        })
-      } else {
-        selectedValue = (options as Option[]).find(
-          (o: Option) => o.value === defaultValue
-        )
+          }
+        }
+      }
+      case 'TextArea': {
+        return {
+          inputProps: {
+            ...formInputProps,
+            onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
+              onInputChange?.(e.target.value, inputName)
+              formInputProps.onChange(e)
+            }
+          }
+        }
+      }
+      case 'Checkbox': {
+        return {
+          inputProps: {
+            ...formInputProps,
+            onChange: (e: ChangeEvent<HTMLInputElement>) => {
+              onInputChange?.(e.target.checked, inputName)
+              formInputProps.onChange(e)
+            }
+          }
+        }
+      }
+      default: {
+        return {}
       }
     }
-    return selectedValue
   }
 
   const renderComponent = () => {
+    console.log('RENDER ', component)
     switch (component) {
       case 'Title': {
         return <Title>{title}</Title>
       }
+      case 'DatePicker':
       case 'SelectInput': {
-        const defaultValue = getSelectDefaultValue()
+        const correctDefaultValue =
+          component === 'SelectInput'
+            ? getSelectDefaultValue(options, defaultValue)
+            : defaultValue
+
         return (
           <Controller
             name={inputName}
             rules={getTransformedValidation(getValues, validation)}
-            defaultValue={defaultValue}
+            defaultValue={correctDefaultValue}
             control={form.control}
             render={({ field }) =>
               React.cloneElement(children, {
                 ...componentProps,
                 formProps: {
                   inputProps: {
-                    options,
-                    ...getInputProps(true),
-                    ...field,
-                    defaultValue
+                    ...getControlledComponentProps(field)
                   },
                   form,
                   customStyle,
@@ -147,8 +191,8 @@ const FormInput = ({
           formProps: {
             form,
             customStyle,
-            customProps,
-            ...getComponentProps(),
+            ...getBasicComponentProps(),
+            customProps
           }
         })
       }
