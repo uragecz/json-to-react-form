@@ -1,16 +1,14 @@
-import { Theme } from '@emotion/react'
-import { Interpolation } from '@emotion/styled'
+import classNames from 'classnames'
 import React from 'react'
 import { LabelPosition } from '../../types'
-import Flex from '../Flex'
-import Text from '../Text'
+
+import './layout.css'
 
 export interface LayoutProps {
   layout: [number, number]
   children: React.ReactNode
   label?: string
   labelPosition?: LabelPosition
-  labelStyle?: Interpolation<Theme>
   unit?: string
 }
 
@@ -18,11 +16,9 @@ const FormLayout = ({
   layout,
   children,
   label,
-  labelStyle,
   unit,
   labelPosition = 'left'
 }: LayoutProps) => {
-
   const getFlexDirectionForLabelPosition = (position?: LabelPosition): any => {
     switch (position) {
       case 'top':
@@ -32,30 +28,46 @@ const FormLayout = ({
       case 'right':
         return 'row-reverse'
       default:
-        return ['column', 'row']
+        return ''
     }
   }
 
   return (
-    <Flex
-      flex={1}
-      mb={4}
-      flexDirection={getFlexDirectionForLabelPosition(labelPosition)}
-      alignItems='center'
+    <div
+      className={classNames('jtrf-input-layout')}
+      style={{
+        flexDirection: getFlexDirectionForLabelPosition(labelPosition)
+      }}
     >
-      <Flex
-        flex={layout[0]}
-        justifyContent={labelPosition === 'left' ? 'flex-end' : 'flex-start'}
-        mr={labelPosition === 'left' ? 3 : 0}
-        ml={labelPosition === 'right' ? 3 : 0}
+      <div
+        className={classNames(`jtrf-input-layout__label-container`)}
+        style={{
+          // @ts-ignore
+          '--label-flex': layout[0],
+          '--label-align': labelPosition === 'left' ? 'flex-end' : 'flex-start',
+          '--label-margin':
+            labelPosition === 'left' ? '0 16px 0 0' : '0 0 0 16px'
+        }}
       >
-        {!!label && <Text css={labelStyle} textAlign="end">{label}</Text>}
-      </Flex>
-      <Flex flex={layout[1]}>
+        {!!label && (
+          <span className={classNames('jtrf-input-layout__label')}>
+            {label}
+          </span>
+        )}
+      </div>
+      <div
+        className={classNames(`jtrf-input-layout__input-container`)}
+        style={{
+          // @ts-ignore
+          '--input-flex': layout[1]
+        }}
+      >
         {children}
-        {unit && <Text css={labelStyle}>{unit}</Text>}
-      </Flex>
-    </Flex>
+        {unit && (
+          <span className={classNames('jtrf-input-layout__unit')}>{unit}</span>
+        )}
+      </div>
+    </div>
   )
 }
 

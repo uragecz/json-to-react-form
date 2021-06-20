@@ -1,0 +1,169 @@
+/* COMMON STYLES */
+
+.jtrf-input-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.jtrf-input-container__input {
+  flex: 1;
+  border: 1px solid #e1e5ed;
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 2px;
+  min-height: 1.5em;
+  -webkit-transition: all 0.275s;
+  transition: all 0.275s;
+}
+
+.jtrf-input-container__input:hover,
+.jtrf-input-container__input:focus {
+  border-color: #a7afbb;
+}
+
+.jtrf-input-container__input--error {
+  border: 1px solid #e73c45;
+}
+
+.jtrf-input-container__error-container {
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  display: flex;
+  align-items: center;
+}
+
+.jtrf-input-container__error-message {
+  font-size: 12px;
+  color: #e73c45;
+  font-weight: 700;
+}
+
+.jtrf-input-container__error-icon {
+  color: #e73c45;
+  margin-right: 4px;
+}
+
+/* BUTTON */
+
+.jtrf-button {
+  background: transparent;
+  border: 1px solid #e1e5ed;
+  outline: none;
+  background-color: #033196;
+  color: white;
+  padding: 16px 32px;
+  white-space: nowrap;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.jtrf-button:hover {
+  background-color: #032b82;
+}
+
+/* SELECT */
+.jtrf-input-container__input--select {
+  background-image: linear-gradient(45deg, transparent 50%, #c2c6ce 50%),
+    linear-gradient(135deg, #c2c6ce 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 17px) calc(1em + 2px),
+    calc(100% - 12px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+
+  /* reset */
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.jtrf-input-container__input--select:focus {
+  background-image: linear-gradient(45deg, #c2c6ce 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, #c2c6ce 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 12px) 1em, calc(100% - 17px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+  outline: 0;
+}
+
+.jtrf-input-container__input--select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+/* CHECKBNOX */
+.jtrf-input-container__input--checkbox:checked,
+.jtrf-input-container__input--checkbox:not(checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.jtrf-input-container__input--checkbox:not(checked) + label,
+.jtrf-input-container__input--checkbox:checked + label {
+  position: relative;
+  padding-left: 26px;
+  font-size: 1.05em;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+.jtrf-input-container__input--checkbox:not(checked) + label:before,
+.jtrf-input-container__input--checkbox:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e1e5ed;
+  background-color: white;
+  border-radius: 0.2em;
+  -webkit-transition: all 0.275s;
+  transition: all 0.275s;
+}
+
+.jtrf-input-container__input--checkbox:checked + label:before {
+  background-color: #033196;
+  border-color: #033196;
+}
+
+.jtrf-input-container__input--checkbox:not(checked) + label:hover:before,
+.jtrf-input-container__input--checkbox:checked + label:hover:before {
+  border-color: #a7afbb;
+}
+
+.jtrf-input-container__input--checkbox:not(checked) + label:after,
+.jtrf-input-container__input--checkbox:checked + label:after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 9px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 0.125rem 0.125rem 0;
+  transform: rotate(45deg);
+}
+
+.jtrf-input-container__input--checkbox:disabled:not(checked) + label:before,
+.jtrf-input-container__input--checkbox:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #e1e5ed;
+  background-color: #e9e9e9;
+}
+
+.jtrf-input-container__input--checkbox:disabled:checked + label:after {
+  color: #777;
+}
+
+.jtrf-input-container__input--checkbox:disabled + label {
+  color: #aaa;
+}

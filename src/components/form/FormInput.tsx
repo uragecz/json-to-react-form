@@ -10,8 +10,7 @@ import {
   getSelectDefaultValue,
   getSelectSelectedValue
 } from '../../inputHelpers'
-import { CustomStyle, Option, Input } from '../../types'
-import Flex from '../Flex'
+import { Option, Input, Classes } from '../../types'
 import Title from '../formComponents/Title'
 
 interface Props {
@@ -23,8 +22,8 @@ interface Props {
   ) => void
   input: Input
   form: UseFormReturn<FieldValues>
-  customStyle: CustomStyle
   isSubmitLoading?: boolean
+  classes?: Classes
 }
 
 const FormInput = ({
@@ -33,8 +32,8 @@ const FormInput = ({
   form,
   onButtonClick,
   onInputChange,
-  customStyle,
-  isSubmitLoading
+  isSubmitLoading,
+  classes
 }: Props) => {
   const { register, getValues } = form
   const {
@@ -48,7 +47,8 @@ const FormInput = ({
     options,
     defaultValue,
     componentProps,
-    customProps
+    customProps,
+    text
   } = input
   const inputName = input.name as string
   const basicInputProps = {
@@ -68,7 +68,7 @@ const FormInput = ({
         return {
           ...basicInputProps,
           ...fields,
-          type: basicInputProps.type || "select",
+          type: basicInputProps.type || 'select',
           onChage: (e: React.ChangeEvent<HTMLSelectElement> | Option) => {
             fields.onChange(e)
             onInputChange?.(getSelectSelectedValue(e), inputName)
@@ -78,7 +78,7 @@ const FormInput = ({
         return {
           ...basicInputProps,
           ...fields,
-          type: basicInputProps.type || "date",
+          type: basicInputProps.type || 'date',
           onChage: (date: Date) => {
             fields.onChange(date)
             onInputChange?.(date, inputName)
@@ -93,11 +93,11 @@ const FormInput = ({
     // Button component shouldn't be registred
     if (component === 'Button') {
       return {
+        title: title || '',
+        isLoading: isSubmitLoading,
         buttonProps: {
           ...basicInputProps,
           disabled: basicInputProps.disabled || isSubmitLoading,
-          title: title || '',
-          isLoading: isSubmitLoading,
           onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             onButtonClick?.(e, inputName)
           }
@@ -141,7 +141,8 @@ const FormInput = ({
               onInputChange?.(e.target.checked, inputName)
               formInputProps.onChange(e)
             }
-          }
+          },
+          text
         }
       }
       default: {
@@ -151,10 +152,9 @@ const FormInput = ({
   }
 
   const renderComponent = () => {
-    console.log('RENDER ', component)
     switch (component) {
       case 'Title': {
-        return <Title>{title}</Title>
+        return <Title formProps={{ classes, form, customProps }}>{title}</Title>
       }
       case 'DatePicker':
       case 'SelectInput': {
@@ -177,7 +177,6 @@ const FormInput = ({
                     ...getControlledComponentProps(field)
                   },
                   form,
-                  customStyle,
                   customProps
                 }
               })
@@ -190,7 +189,6 @@ const FormInput = ({
           ...componentProps,
           formProps: {
             form,
-            customStyle,
             ...getBasicComponentProps(),
             customProps
           }
@@ -200,9 +198,9 @@ const FormInput = ({
   }
 
   return (
-    <Flex display={hidden ? 'none' : 'flex'} flex={1}>
+    <div style={{ display: hidden ? 'none' : 'flex', flex: 1 }}>
       {renderComponent()}
-    </Flex>
+    </div>
   )
 }
 

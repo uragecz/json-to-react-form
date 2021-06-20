@@ -144,9 +144,6 @@ formName?: string
 // Layout for input and its label, first value is size of label, second is input, default is [3,7].
 layout?: [number, number]
 
-// Defines breakpoint, when layout should be set for mobile / desktop, default is '52em'
-desktopBreakpoint?: number
-
 // You can provide your own layout component, that cares of rendering label together with input.
 layoutComponent?: FunctionComponent<any>
 
@@ -167,19 +164,6 @@ component?: {
   Button?: FunctionComponent<ButtonFormProps>
   TextArea?: FunctionComponent<InputFormProps>
   Title?: FunctionComponent<{ children: React.ReactNode }>
-}
-
-// Styles that you can adjust by your wishes, if it's not enough, you can always pass your own components
-customStyle?: {
-  borderRadius?: string,
-  errorColor?: string,
-  labelColor?: string,
-  buttonBackgroundColor?: string,
-  buttonBorderColor?: string,
-  buttonTextColor?: string,
-  inputBorderColor?: string,
-  inputBackgroundColor?:string,
-  checkboxActiveColor?: string,
 }
 ```
 

@@ -1,0 +1,61 @@
+.jtrf-form-container {
+  flex: 1;
+  flex-direction: column;
+}
+
+.jtrf-children-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.jtrf-input-layout {
+  flex: 1;
+  margin-bottom: 32px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.jtrf-input-layout:last-of-type {
+  margin-bottom: 0;
+}
+
+.jtrf-children-wrapper__child {
+  margin-left: 32px;
+}
+
+.jtrf-input-layout__input-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.jtrf-input-layout__label-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+@media only screen and (min-width: 768px) {
+  .jtrf-children-wrapper__child {
+    margin-bottom: 32px;
+    margin-left: 0;
+  }
+
+  .jtrf-input-layout,
+  .jtrf-children-wrapper {
+    flex-direction: row;
+  }
+
+  .jtrf-input-layout__input-container {
+    flex: var(--input-flex);
+  }
+
+  .jtrf-input-layout__label-container {
+    flex: var(--label-flex);
+    justify-content: var(--label-align);
+    margin: var(--label-margin);
+  }
+}

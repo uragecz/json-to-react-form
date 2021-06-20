@@ -3,15 +3,15 @@ import {
   ControllerRenderProps,
   FieldValues,
   RegisterOptions,
-  UseFormReturn,
+  UseFormReturn
 } from 'react-hook-form'
 
 export type AdvanceValidation = (value: string) => string | true
 
 export type Validation = {
-  value: string,
+  value: string
   message: string
-};
+}
 
 export type Validations = Omit<RegisterOptions, 'pattern' | 'validate'> & {
   pattern?: Validation
@@ -34,12 +34,17 @@ export type Input = {
   validation?: Validations
   align?: string
   unit?: string
-  title?: string
   component: string
   hidden?: string
 
   // for select
-  options?: GroupOption[] | Option[] | undefined;
+  options?: GroupOption[] | Option[] | undefined
+
+  // for checkbox
+  text?: string
+
+  // for button
+  title?: string
 
   // other props
   componentProps: any
@@ -77,7 +82,15 @@ export type LabelPosition = 'top' | 'left' | 'bottom' | 'right'
 
 export interface InputProps {
   onChange: (
-    event: Option | Date | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLDivElement | HTMLSelectElement>
+    event:
+      | Option
+      | Date
+      | React.ChangeEvent<
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLDivElement
+          | HTMLSelectElement
+        >
   ) => void
   placeholder?: string
   name: string
@@ -113,35 +126,36 @@ export interface GroupOption {
   options: Option[]
 }
 
+interface Classes {
+  input?: string
+  inputError?: string
+  pswdButton?: string
+  errorContainer?: string
+  errorIcon?: string
+  errorMessage?: string
+  button?: string
+  buttonTitle?: string
+  title?: string
+  childrenWrapper?: string
+}
+
 interface FormProps {
   form: UseFormReturn<FieldValues>
   customProps: {}
-  customStyle: CustomStyle
+  classes?: Classes
 }
 
 export interface ButtonFormProps extends FormProps {
   buttonProps: ButtonProps
-  title?: string;
-  isLoading: boolean;
+  title?: string
+  isLoading: boolean
 }
 
 export interface InputFormProps extends FormProps {
   inputProps: InputProps
+
+  // for checkbox
+  text?: string
 }
 
-export interface CustomStyle {
-  // general
-  borderRadius?: string;
-  errorColor?: string;
-  labelColor?: string;
-
-  // buton
-  buttonBackgroundColor?: string;
-  buttonBorderColor?: string;
-  buttonTextColor?: string;
-
-  // input
-  inputBorderColor?: string
-  inputBackgroundColor?: string
-  checkboxActiveColor?: string
-}
+export interface TitleFormProps extends FormProps {}

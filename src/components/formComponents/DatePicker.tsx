@@ -1,71 +1,58 @@
 import React from 'react'
-import { CustomStyle, InputFormProps } from '../../types'
-import styled from '@emotion/styled'
-import Flex from '../Flex'
+import { InputFormProps } from '../../types'
 import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
-import { darken } from 'polished'
+import classNames from 'classnames'
+
+import './input.css'
 
 interface Props {
   formProps: InputFormProps
 }
 
 const DatePicker = ({ formProps }: Props) => {
-  const { inputProps, form, customStyle } = formProps
+  const { inputProps, form, classes } = formProps
   const { name } = inputProps
-  const error = form.formState.errors[name];
-  console.log('OK ', formProps)
+  const error = form.formState.errors[name]
+
   return (
-    <Flex flex={1} position='relative'>
-      <StyledInput {...inputProps} error={error} customStyle={customStyle}/>
+    <div className='jtrf-input-container'>
+      <input
+        {...inputProps}
+        className={classNames(
+          'jtrf-input-container__input',
+          'jtrf-input-container__input--datepicker',
+          classes?.input,
+          {
+            'jtrf-input-container__input--error': !!error,
+            [classes?.inputError || '']: !!error && classes?.inputError
+          }
+        )}
+      />
       {error && (
-        <React.Fragment>
-          <Icon>
-            <ErrorSVG />
-          </Icon>
-          <Error customStyle={customStyle}>{error.message}</Error>
-        </React.Fragment>
+        <div
+          className={classNames(
+            'jtrf-input-container__error-container',
+            classes?.errorContainer
+          )}
+        >
+          <ErrorSVG
+            className={classNames(
+              'jtrf-input-container__error-icon',
+              classes?.errorIcon
+            )}
+          />
+          <span
+            className={classNames(
+              'jtrf-input-container__error-message',
+              classes?.errorMessage
+            )}
+          >
+            {error.message}
+          </span>
+        </div>
       )}
-    </Flex>
+    </div>
   )
 }
 
-export default DatePicker;
-
-const StyledInput = styled.input<{ error: boolean; customStyle: CustomStyle }>`
-  padding: 10.5px 14px;
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${({ error, customStyle }) =>
-    error ? customStyle.errorColor : customStyle.inputBorderColor};
-
-  &:hover {
-    border-color: ${({ error, customStyle }) =>
-      error
-        ? customStyle.errorColor
-        : darken(0.1, customStyle.inputBorderColor as string)};
-
-  }
-
-  &:focus {
-    border-color: ${({ customStyle }) => darken(0.1, customStyle.inputBorderColor as string)};
-  }
-
-  border-radius: ${({ customStyle }) => customStyle.borderRadius};
-  background-color: ${({ customStyle }) => customStyle.inputBackgroundColor};
-  outline: none;
-`
-
-const Error = styled.span<{ customStyle: CustomStyle }>`
-  position: absolute;
-  bottom: -14px;
-  left: 0;
-  font-size: 0.7rem;
-  color: ${({ customStyle }) => customStyle.errorColor};
-`
-
-const Icon = styled.div`
-  position: absolute;
-  top: 8px;
-  right: 40px;
-`
+export default DatePicker

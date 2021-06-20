@@ -1,14 +1,12 @@
-import { ThemeProvider } from '@emotion/react'
 import React, { FunctionComponent } from 'react'
 import { FieldValues, useForm, UseFormReturn } from 'react-hook-form'
 import {
   ButtonFormProps,
-  CustomStyle,
+  Classes,
   Input,
   InputFormProps,
   Item
 } from '../../types'
-import Flex from '../Flex'
 import FormInput from './FormInput'
 import FormLayout, { LayoutProps } from './FormLayout'
 import SelectInput from '../formComponents/SelectInput'
@@ -18,7 +16,7 @@ import Button from '../formComponents/Button'
 import TextArea from '../formComponents/TextArea'
 import Title from '../formComponents/Title'
 import DatePicker from '../formComponents/DatePicker'
-import style from '../../style'
+import classNames from 'classnames'
 
 const mapFormInput = {
   TextInput,
@@ -51,9 +49,7 @@ interface Props {
     TextArea?: FunctionComponent<InputFormProps>
     Title?: FunctionComponent<{ children: React.ReactNode }>
   }
-  desktopBreakpoint?: number
-  customStyle?: CustomStyle
-
+  classes?: Classes
   // neccessary repetable form
   fields?: Record<'id', string>[]
   formName?: string
@@ -68,29 +64,12 @@ const Form = ({
   onButtonClick,
   layoutComponent,
   components = {},
-  customStyle,
-  desktopBreakpoint,
   formName,
-  fields
+  fields,
+  classes
 }: Props) => {
   const _form = form || useForm({ mode: 'onBlur' })
   const { watch, handleSubmit } = _form
-
-  const correctStyle: CustomStyle = {
-    borderRadius: customStyle?.borderRadius || style.borderRadius,
-    errorColor: customStyle?.errorColor || style.errorColor,
-    labelColor: customStyle?.labelColor || style.labelColor,
-    buttonBackgroundColor:
-      customStyle?.buttonBackgroundColor || style.buttonBackgroundColor,
-    buttonBorderColor:
-      customStyle?.buttonBorderColor || style.buttonBorderColor,
-    buttonTextColor: customStyle?.buttonTextColor || style.buttonTextColor,
-    inputBorderColor: customStyle?.inputBorderColor || style.inputBorderColor,
-    inputBackgroundColor:
-      customStyle?.inputBackgroundColor || style.inputBackgroundColor,
-    checkboxActiveColor:
-      customStyle?.checkboxActiveColor || style.checkboxActiveColor,
-  }
 
   const getInputPropsForRepeatableForm = (
     name: string,
@@ -140,8 +119,9 @@ const Form = ({
         <FormInput
           onInputChange={onInputChange}
           onButtonClick={onButtonClick}
+          classes={classes}
           input={{
-            ...input as Input,
+            ...(input as Input),
             ...getInputPropsForRepeatableForm(
               input.name as string,
               formIndex,
@@ -149,7 +129,6 @@ const Form = ({
             )
           }}
           form={_form}
-          customStyle={correctStyle}
         >
           {component
             ? React.createElement(
@@ -190,22 +169,23 @@ const Form = ({
           (i1, i2) => (i1.order || 0) - (i2.order || 0)
         )
         return (
-          <Flex
-            flexDirection={['column', 'row']}
-            alignItems='center'
+          <div
+            className={classNames(
+              'jtrf-children-wrapper',
+              classes?.childrenWrapper
+            )}
             key={`form-${index}`}
-            justifyContent={item.align || 'space-between'}
+            style={{ justifyContent: item.align || 'space-between' }}
           >
-            {sortedInputs.map((i, index) => (
-              <Flex
-                mr={[0, index < sortedInputs.length - 1 ? 4 : 0]}
-                mb={[index < sortedInputs.length - 1 ? 3 : 0, 0]}
+            {sortedInputs.map((i) => (
+              <div
+                className='jtrf-children-wrapper__child'
                 key={`form-child-${i.name}${i.label}`}
               >
                 {renderChildren([i], formIndex, formField)}
-              </Flex>
+              </div>
             ))}
-          </Flex>
+          </div>
         )
       }
 
@@ -215,24 +195,17 @@ const Form = ({
   }
 
   return (
-    <ThemeProvider
-      theme={{
-        breakpoints: [0, desktopBreakpoint || '52em'],
-        space: [0, 4, 8, 16, 24, 32]
-      }}
-    >
-      <Flex flexDirection='column' flex={1}>
-        <form onSubmit={onSubmit && handleSubmit(onSubmit)}>
-          {fields
-            ? fields.map((formField, index) => (
-                <div key={formField.id}>
-                  {renderChildren(inputs, index, formField)}
-                </div>
-              ))
-            : renderChildren(inputs, 0)}
-        </form>
-      </Flex>
-    </ThemeProvider>
+    <div className='jtrf-form-container'>
+      <form onSubmit={onSubmit && handleSubmit(onSubmit)}>
+        {fields
+          ? fields.map((formField, index) => (
+              <div key={formField.id}>
+                {renderChildren(inputs, index, formField)}
+              </div>
+            ))
+          : renderChildren(inputs, 0)}
+      </form>
+    </div>
   )
 }
 
