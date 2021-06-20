@@ -1,100 +1,65 @@
-import styled from '@emotion/styled'
-import { darken } from 'polished'
+import classNames from 'classnames'
 import React from 'react'
-import { CustomStyle, InputFormProps } from '../../types'
+import { InputFormProps } from '../../types'
+import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
+
+import './input.css'
+import HtmlParser from '../HtmlParser'
 
 interface Props {
   formProps: InputFormProps
 }
 
 const Checkbox = ({ formProps }: Props) => {
-  const { inputProps, form, customStyle } = formProps;
+  const { inputProps, form, classes, text } = formProps
   const { name } = inputProps
-  const error = form.formState.errors[name];
+  const error = form.formState.errors[name]
+
   return (
-    <Label customStyle={customStyle}>
-      <input {...inputProps} type='checkbox' />
-      <Checkmark error={Boolean(error)} customStyle={customStyle} />
-      {error && <Error customStyle={customStyle}>{error.message}</Error>}
-    </Label>
+    <div className='jtrf-input-container'>
+      <input
+        {...inputProps}
+        id={inputProps.name}
+        type='checkbox'
+        onChange={console.log}
+        className={classNames(
+          'jtrf-input-container__input',
+          'jtrf-input-container__input--checkbox',
+          classes?.input,
+          {
+            'jtrf-input-container__input---error': !!error,
+            [classes?.inputError || '']: !!error && classes?.inputError
+          }
+        )}
+      />
+      <label htmlFor={inputProps.name}>
+        <HtmlParser html={text} style={{ marginLeft: '16px' }} />
+      </label>
+      {error && (
+        <div
+          className={classNames(
+            'jtrf-input-container__error-container',
+            classes?.errorContainer
+          )}
+        >
+          <ErrorSVG
+            className={classNames(
+              'jtrf-input-container__error-icon',
+              classes?.errorIcon
+            )}
+          />
+          <span
+            className={classNames(
+              'jtrf-input-container__error-message',
+              classes?.errorMessage
+            )}
+          >
+            {error.message}
+          </span>
+        </div>
+      )}
+    </div>
   )
 }
 
 export default Checkbox
-
-const Checkmark = styled.span<{ customStyle: CustomStyle; error: boolean }>`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: ${({ error, customStyle }) =>
-    `1px solid ${
-      error ? customStyle.errorColor : customStyle.inputBorderColor
-    }`};
-  border-radius: ${({ customStyle }) => customStyle.borderRadius};
-  background-color: ${({ customStyle }) => customStyle.inputBackgroundColor};
-  transform: translate(0, -50%);
-
-  &:hover {
-    border: ${({ error, customStyle }) =>
-    `1px solid ${
-      error ? customStyle.errorColor : darken(0.1, customStyle.inputBorderColor as string)
-    }`};
-  }
-
-  ::after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
-`
-
-const Label = styled.label<{ customStyle: CustomStyle }>`
-  position: relative;
-  display: block;
-  padding-left: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  user-select: none;
-
-  input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    cursor: pointer;
-  }
-
-  input:checked ~ ${Checkmark} {
-    border: none;
-    background-color: ${({ customStyle }) =>
-      customStyle.checkboxActiveColor};
-  }
-
-  ${Checkmark} {
-    ::after {
-      top: 0.25rem;
-      left: 33%;
-      width: 0.25rem;
-      height: 0.5rem;
-      border: solid white;
-      border-width: 0 0.125rem 0.125rem 0;
-      transform: rotate(45deg);
-    }
-  }
-
-  input:checked ~ ${Checkmark} {
-    ::after {
-      display: block;
-    }
-  }
-`
-
-const Error = styled.span<{ customStyle: CustomStyle }>`
-  position: absolute;
-  top: 42px;
-  left: 0;
-  font-size: 0.7rem;
-  color: ${({ customStyle }) => customStyle.errorColor};
-`

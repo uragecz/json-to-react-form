@@ -12,8 +12,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs ",
+    "build": "microbundle-crl --no-compress --no-css-modules --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs ",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -35,14 +35,13 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
-    "@types/react-select": "^4.0.13",
     "@types/sanitize-html": "^1.27.1",
     "@types/styled-system": "^5.1.10",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
-    "eslint": "^6.8.0",
+    "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-config-standard-react": "^9.2.0",
@@ -66,12 +65,9 @@
   ],
   "dependencies": {
     "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.1.5",
-    "polished": "^4.1.2",
+    "classnames": "^2.3.1",
     "rambda": "^6.7.0",
     "react-hook-form": "^7.7.1",
-    "react-select": "^4.1.0",
-    "sanitize-html": "^2.3.2",
-    "styled-system": "^5.1.5"
+    "sanitize-html": "^2.3.2"
   }
 }

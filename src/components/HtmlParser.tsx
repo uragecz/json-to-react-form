@@ -11,15 +11,16 @@ export const prepositions = (value: string) => {
   };
 
 interface Props {
-  html: string | null;
+  html?: string | null;
+  style?: {};
 }
 
-const HtmlParser = ({ html }: Props) => {
+const HtmlParser = ({ html, style }: Props) => {
   if (html == null) {
     return null;
   }
   const safeHtml = sanitizeHtml(prepositions(html));
-  return <div dangerouslySetInnerHTML={{ __html: safeHtml }} />;
+  return <div dangerouslySetInnerHTML={{ __html: safeHtml }} style={style} />;
 };
 
 export default HtmlParser;

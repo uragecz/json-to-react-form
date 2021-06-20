@@ -35,10 +35,19 @@
     "label": "More info"
   },
   {
+    "component": "DatePicker",
+    "name": "dateFrom",
+    "order": 0,
+    "label": "Od:",
+    "validation": {
+      "required": "This field is required"
+    }
+  },
+  {
     "component": "Checkbox",
     "name": "agreement",
     "order": 1.1,
-    "label": "GDPR"
+    "text": "GDPR"
   },
   {
     "order": 2,

@@ -1,18 +1,16 @@
-import styled from '@emotion/styled';
-import React from 'react';
-import Text from '../Text';
+import classNames from 'classnames'
+import React from 'react'
+import { TitleFormProps } from '../../types'
 
-const Title = ({ children }: { children?: React.ReactNode }) => {
-    return(
-        <TitleText>
-            {children}
-        </TitleText>
-    )
-};
+interface Props {
+  children?: React.ReactNode
+  formProps: TitleFormProps
+}
 
-export default Title;
+const Title = ({ children, formProps: { classes } }: Props) => {
+  return (
+    <span className={classNames('jtrf-title', classes?.title)}>{children}</span>
+  )
+}
 
-const TitleText = styled(Text)`
-    font-size: 1.5rem;
-    font-weight: 700;
-`;
+export default Title

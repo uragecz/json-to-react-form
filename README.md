@@ -65,7 +65,9 @@ npm install --save json-to-react-form
 import React, { Component } from 'react'
 
 import Form from 'json-to-react-form'
-import registrationInputs from './registrationForm'
+import registrationInputs from './registrationForm.json'
+// import styles
+import 'json-to-react-form/dist/index.css'
 
 const Registration = () => {
   const handleRegister = (values: any) => {
@@ -81,13 +83,15 @@ const Registration = () => {
 }
 ```
 
-**Generating form using custom input component:**
+**Generating form providing own input component:**
 
 ```tsx
 import React, { Component } from 'react'
 
 import Form, { InputFormProps } from 'json-to-react-form'
 import registrationInputs from './registrationForm'
+// import styles
+import 'json-to-react-form/dist/index.css'
 
 interface Props {
   // This property is injected by our library
@@ -107,9 +111,8 @@ const TextInput = ({ formProps }: Props) => {
 }
 
 const Registration = () => {
-  const handleRegister = (values: any) => {
-    // do some ajax call
-  }
+  const handleRegister = (values: any) => {}
+
   return (
     <Form
       layout={[2, 8]}
@@ -144,9 +147,6 @@ formName?: string
 // Layout for input and its label, first value is size of label, second is input, default is [3,7].
 layout?: [number, number]
 
-// Defines breakpoint, when layout should be set for mobile / desktop, default is '52em'
-desktopBreakpoint?: number
-
 // You can provide your own layout component, that cares of rendering label together with input.
 layoutComponent?: FunctionComponent<any>
 
@@ -159,6 +159,28 @@ onButtonClick?: (
 ) => void
 onInputChange?: (checked: boolean | number | string, name: string) => void
 
+// You can add your classname for our elements to add your own style
+classes?: {
+  // for input element
+  input?: string
+  // for input element in error state
+  inputError?: string
+  // eye icon button on password type button
+  pswdButton?: string
+  // wrapper around error icon and error message
+  errorContainer?: string
+  // for error icon
+  errorIcon?: string
+  // for error message
+  errorMessage?: string
+  // for button elements
+  button?: string
+  // for title
+  title?: string
+  // for wrapper around children
+  childrenWrapper?: string
+}
+
 // We provide our own components by default, but if you want you can provide your own with own, it's super easy !
 component?: {
   TextInput?: FunctionComponent<InputFormProps>
@@ -168,20 +190,11 @@ component?: {
   TextArea?: FunctionComponent<InputFormProps>
   Title?: FunctionComponent<{ children: React.ReactNode }>
 }
-
-// Styles that you can adjust by your wishes, if it's not enough, you can always pass your own components
-customStyle?: {
-  borderRadius?: string,
-  errorColor?: string,
-  labelColor?: string,
-  buttonBackgroundColor?: string,
-  buttonBorderColor?: string,
-  buttonTextColor?: string,
-  inputBorderColor?: string,
-  inputBackgroundColor?:string,
-  checkboxActiveColor?: string,
-}
 ```
+
+## What are InputFormProps and ButtonFormProps
+
+It contains basic props that needs to be passed into input / button. If you are using some advance library like react-select and so, you should provide these props correctly. This prop may be different for different kind of input.
 
 ## Items/Inputs type for json
 
@@ -234,7 +247,9 @@ Checkbox:
 ```tsx
 {
   // Allows to render children if checkbox is checked
-  conditionalChildrenRender: true,
+  conditionalChildrenRender?: true,
+  // can contain html tags
+  text?: string
 }
 ```
 
