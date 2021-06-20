@@ -65,7 +65,9 @@ npm install --save json-to-react-form
 import React, { Component } from 'react'
 
 import Form from 'json-to-react-form'
-import registrationInputs from './registrationForm'
+import registrationInputs from './registrationForm.json'
+// import styles
+import 'json-to-react-form/dist/index.css'
 
 const Registration = () => {
   const handleRegister = (values: any) => {
@@ -81,13 +83,15 @@ const Registration = () => {
 }
 ```
 
-**Generating form using custom input component:**
+**Generating form providing own input component:**
 
 ```tsx
 import React, { Component } from 'react'
 
 import Form, { InputFormProps } from 'json-to-react-form'
 import registrationInputs from './registrationForm'
+// import styles
+import 'json-to-react-form/dist/index.css'
 
 interface Props {
   // This property is injected by our library
@@ -107,9 +111,8 @@ const TextInput = ({ formProps }: Props) => {
 }
 
 const Registration = () => {
-  const handleRegister = (values: any) => {
-    // do some ajax call
-  }
+  const handleRegister = (values: any) => {}
+
   return (
     <Form
       layout={[2, 8]}
@@ -155,6 +158,28 @@ onButtonClick?: (
   name: string
 ) => void
 onInputChange?: (checked: boolean | number | string, name: string) => void
+
+// You can add your classname for our elements to add your own style
+classes?: {
+  // for input element
+  input?: string
+  // for input element in error state
+  inputError?: string
+  // eye icon button on password type button
+  pswdButton?: string
+  // wrapper around error icon and error message
+  errorContainer?: string
+  // for error icon
+  errorIcon?: string
+  // for error message
+  errorMessage?: string
+  // for button elements
+  button?: string
+  // for title
+  title?: string
+  // for wrapper around children
+  childrenWrapper?: string
+}
 
 // We provide our own components by default, but if you want you can provide your own with own, it's super easy !
 component?: {

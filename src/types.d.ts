@@ -134,7 +134,6 @@ interface Classes {
   errorIcon?: string
   errorMessage?: string
   button?: string
-  buttonTitle?: string
   title?: string
   childrenWrapper?: string
 }
