@@ -2,19 +2,17 @@ import styled from '@emotion/styled'
 import { darken } from 'polished'
 import React from 'react'
 import { CustomStyle, InputFormProps } from '../../types'
-import HtmlParser from '../HtmlParser'
 
 interface Props {
   formProps: InputFormProps
 }
 
 const Checkbox = ({ formProps }: Props) => {
-  const { inputProps, form, customStyle } = formProps
-  const { label, name } = inputProps
+  const { inputProps, form, customStyle } = formProps;
+  const { name } = inputProps
   const error = form.formState.errors[name];
   return (
     <Label customStyle={customStyle}>
-      {label != null && <HtmlParser html={label} />}
       <input {...inputProps} type='checkbox' />
       <Checkmark error={Boolean(error)} customStyle={customStyle} />
       {error && <Error customStyle={customStyle}>{error.message}</Error>}

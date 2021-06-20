@@ -1,6 +1,10 @@
 import React, { ChangeEvent } from 'react'
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form'
-import { getTransformedValidation } from '../../helpers'
+import {
+  getOnlyButtontProps,
+  getOnlyInputProps,
+  getTransformedValidation
+} from '../../helpers'
 import { CustomStyle, Item, InputProps, GroupOption, Option } from '../../types'
 import Flex from '../Flex'
 import Title from '../formComponents/Title'
@@ -29,11 +33,8 @@ const FormInput = ({
 }: Props) => {
   const { register, getValues } = form
   const {
-    type,
-    disabled,
     component,
     validation,
-    placeholder,
     hidden,
     title,
     options,
@@ -41,95 +42,48 @@ const FormInput = ({
     componentProps,
     customProps
   } = input
-
   const inputName = input.name as string
 
-  const getComponentProps = () => {
-    let inputProps: InputProps | {} = {}
-
-    // Button can't be registred
-    if (component !== 'Button') {
-      const input = register(inputName, {
-        ...getTransformedValidation(getValues, validation),
-        shouldUnregister: true
-      })
-      inputProps = {
-        placeholder,
-        type,
-        disabled: disabled === 'true',
-        defaultValue,
-        ...input,
-        onChange: (e: ChangeEvent<HTMLInputElement>) => {
-          onInputChange?.(
-            component === 'Checkbox' ? e.target.checked : e.target.value,
-            inputName
-          )
-          input.onChange(e)
-        }
+  const getInputProps = (skipRegister?: boolean) => {
+    const formInputProps: InputProps | {} = !skipRegister
+      ? register(inputName, getTransformedValidation(getValues, validation))
+      : {}
+    return {
+      ...getOnlyInputProps(input),
+      ...formInputProps,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => {
+        onInputChange?.(
+          component === 'Checkbox' ? e.target.checked : e.target.value,
+          inputName
+        )
+        ;(formInputProps as InputProps).onChange?.(e)
       }
     }
+  }
 
+  const getComponentProps = () => {
     switch (component) {
       case 'Button': {
+        const buttonProps = getOnlyButtontProps(input)
         return {
           buttonProps: {
-            type: type as 'submit' | 'button' | 'reset',
-            disabled: disabled === 'true' || isSubmitLoading,
-            title: title || '',
-            isLoading: isSubmitLoading,
+            ...buttonProps,
+            disabled: buttonProps.disabled || !!isSubmitLoading,
             onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
               onButtonClick?.(e, inputName)
             }
-          }
+          },
+          title: title,
+          isLoading: !!isSubmitLoading
         }
       }
-      case 'TextInput': {
-        return {
-          inputProps: {
-            ...inputProps,
-            onChange: (e: ChangeEvent<HTMLInputElement>) => {
-              onInputChange?.(e.target.value, inputName);
-              (inputProps as InputProps).onChange?.(e)
-            }
-          }
-        }
-      }
-      case 'TextArea': {
-        return {
-          inputProps: {
-            ...inputProps,
-            onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-              onInputChange?.(e.target.value, inputName);
-              (inputProps as InputProps).onChange?.(e)
-            }
-          }
-        }
-      }
-      case 'Checkbox': {
-        return {
-          inputProps: {
-            ...inputProps,
-            onChange: (e: ChangeEvent<HTMLInputElement>) => {
-              onInputChange?.(e.target.checked, inputName);
-              (inputProps as InputProps).onChange?.(e)
-            }
-          }
-        }
-      }
-      case 'SelectInput': {
-        return {
-          inputProps: {
-            ...inputProps,
-            onChange: (option: Option) => {
-              onInputChange?.(option.value, inputName);
-              (inputProps as InputProps).onChange?.(option)
-            },
-            options
-          }
-        }
-      }
+      // other inputs have same props
       default: {
-        return {}
+        return {
+          inputProps: {
+            ...getInputProps()
+          }
+        }
       }
     }
   }
@@ -173,9 +127,10 @@ const FormInput = ({
                 ...componentProps,
                 formProps: {
                   inputProps: {
-                    defaultValue,
-                    ...getComponentProps().inputProps,
-                    ...field
+                    options,
+                    ...getInputProps(true),
+                    ...field,
+                    defaultValue
                   },
                   form,
                   customStyle,
@@ -192,8 +147,8 @@ const FormInput = ({
           formProps: {
             form,
             customStyle,
+            customProps,
             ...getComponentProps(),
-            customProps
           }
         })
       }
