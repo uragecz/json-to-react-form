@@ -47,7 +47,7 @@
     "component": "Checkbox",
     "name": "agreement",
     "order": 1.1,
-    "label": "GDPR"
+    "text": "GDPR"
   },
   {
     "order": 2,

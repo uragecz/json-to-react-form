@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import {
   Control,
   ControllerRenderProps,
@@ -11,6 +12,18 @@ export type AdvanceValidation = (value: string) => string | true
 export type Validation = {
   value: string
   message: string
+}
+
+export type Components = {
+  components?: {
+    TextInput?: FunctionComponent<InputFormProps>
+    SelectInput?: FunctionComponent<InputFormProps>
+    DatePicker?: FunctionComponent<InputFormProps>
+    Checkbox?: FunctionComponent<InputFormProps>
+    Button?: FunctionComponent<ButtonFormProps>
+    TextArea?: FunctionComponent<InputFormProps>
+    Title?: FunctionComponent<{ children: React.ReactNode }>
+  }
 }
 
 export type Validations = Omit<RegisterOptions, 'pattern' | 'validate'> & {

@@ -3,6 +3,7 @@ import { FieldValues, useForm, UseFormReturn } from 'react-hook-form'
 import {
   ButtonFormProps,
   Classes,
+  Components,
   Input,
   InputFormProps,
   Item
@@ -40,15 +41,7 @@ interface Props {
   onInputChange?: (checked: boolean | number | string, name: string) => void
   validationMode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all'
   layoutComponent?: FunctionComponent<any>
-  components?: {
-    TextInput?: FunctionComponent<InputFormProps>
-    SelectInput?: FunctionComponent<InputFormProps>
-    DatePicker?: FunctionComponent<InputFormProps>
-    Checkbox?: FunctionComponent<InputFormProps>
-    Button?: FunctionComponent<ButtonFormProps>
-    TextArea?: FunctionComponent<InputFormProps>
-    Title?: FunctionComponent<{ children: React.ReactNode }>
-  }
+  components?: Components
   classes?: Classes
   // neccessary repetable form
   fields?: Record<'id', string>[]

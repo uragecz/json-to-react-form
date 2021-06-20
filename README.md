@@ -192,6 +192,10 @@ component?: {
 }
 ```
 
+## What are InputFormProps and ButtonFormProps
+
+It contains basic props that needs to be passed into input / button. If you are using some advance library like react-select and so, you should provide these props correctly. This prop may be different for different kind of input.
+
 ## Items/Inputs type for json
 
 **Common properties for all inputs**
@@ -243,7 +247,9 @@ Checkbox:
 ```tsx
 {
   // Allows to render children if checkbox is checked
-  conditionalChildrenRender: true,
+  conditionalChildrenRender?: true,
+  // can contain html tags
+  text?: string
 }
 ```
 

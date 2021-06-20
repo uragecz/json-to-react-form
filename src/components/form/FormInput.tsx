@@ -48,7 +48,7 @@ const FormInput = ({
     defaultValue,
     componentProps,
     customProps,
-    text
+    text,
   } = input
   const inputName = input.name as string
   const basicInputProps = {
@@ -56,8 +56,6 @@ const FormInput = ({
     type,
     name: inputName,
     disabled: disabled === 'true',
-    defaultValue,
-    ...input
   }
 
   const getControlledComponentProps = (
@@ -69,7 +67,8 @@ const FormInput = ({
           ...basicInputProps,
           ...fields,
           type: basicInputProps.type || 'select',
-          onChage: (e: React.ChangeEvent<HTMLSelectElement> | Option) => {
+          options,
+          onChange: (e: React.ChangeEvent<HTMLSelectElement> | Option) => {
             fields.onChange(e)
             onInputChange?.(getSelectSelectedValue(e), inputName)
           }
@@ -79,7 +78,7 @@ const FormInput = ({
           ...basicInputProps,
           ...fields,
           type: basicInputProps.type || 'date',
-          onChage: (date: Date) => {
+          onChange: (date: Date) => {
             fields.onChange(date)
             onInputChange?.(date, inputName)
           }
@@ -174,7 +173,8 @@ const FormInput = ({
                 ...componentProps,
                 formProps: {
                   inputProps: {
-                    ...getControlledComponentProps(field)
+                    ...getControlledComponentProps(field),
+                    defaultValue: correctDefaultValue
                   },
                   form,
                   customProps
