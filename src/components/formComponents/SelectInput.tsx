@@ -1,10 +1,9 @@
 import React from 'react'
-import { flatten } from 'rambda'
 import classNames from 'classnames'
-import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
-
-import './input.css'
 import { GroupOption, InputFormProps, Option } from '../../types'
+import { flatten } from '../../helpers'
+import './input.css'
+import ErrorContainer from './ErrorContainer'
 
 interface Props {
   formProps: InputFormProps
@@ -26,7 +25,9 @@ const SelectInput = ({ formProps }: Props) => {
   }
 
   return (
-    <div className='jtrf-input-container'>
+    <div
+      className={classNames('jtrf-input-container', classes?.inputContainer)}
+    >
       <select
         {...inputProps}
         className={classNames(
@@ -45,29 +46,7 @@ const SelectInput = ({ formProps }: Props) => {
           </option>
         ))}
       </select>
-      {error && (
-        <div
-          className={classNames(
-            'jtrf-input-container__error-container',
-            classes?.errorContainer
-          )}
-        >
-          <ErrorSVG
-            className={classNames(
-              'jtrf-input-container__error-icon',
-              classes?.errorIcon
-            )}
-          />
-          <span
-            className={classNames(
-              'jtrf-input-container__error-message',
-              classes?.errorMessage
-            )}
-          >
-            {error.message}
-          </span>
-        </div>
-      )}
+      <ErrorContainer error={error} classes={classes} />
     </div>
   )
 }

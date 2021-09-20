@@ -15,6 +15,7 @@ import TextInput from '../formComponents/TextInput'
 import Checkbox from '../formComponents/Checkbox'
 import Button from '../formComponents/Button'
 import TextArea from '../formComponents/TextArea'
+import RadioButton from '../formComponents/RadioButton'
 import Title from '../formComponents/Title'
 import DatePicker from '../formComponents/DatePicker'
 import classNames from 'classnames'
@@ -25,6 +26,7 @@ const mapFormInput = {
   Checkbox,
   Button,
   TextArea,
+  RadioButton,
   Title,
   DatePicker
 }
@@ -106,9 +108,10 @@ const Form = ({
   ) => {
     const component = input.component
       ? components[input.component] || mapFormInput[input.component]
-      : null
+      : null;
+
     return (
-      <Layout layout={layout} label={input.label} unit={input.unit}>
+      <Layout layout={layout} label={input.label} unit={input.unit} key={`${input.name}_layout`}>
         <FormInput
           onInputChange={onInputChange}
           onButtonClick={onButtonClick}

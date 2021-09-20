@@ -167,3 +167,12 @@
 .jtrf-input-container__input--checkbox:disabled + label {
   color: #aaa;
 }
+
+/* RADIO BUTTON */
+.jtrf-input-container__input--radio-button {
+  min-height: 0.5rem;
+}
+
+.jtrf-input-container__option {
+  padding-top: 8px;
+}

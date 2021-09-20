@@ -1,10 +1,9 @@
 import classNames from 'classnames'
 import React from 'react'
 import { InputFormProps } from '../../types'
-import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
-
-import './input.css'
 import HtmlParser from '../HtmlParser'
+import ErrorContainer from './ErrorContainer'
+import './input.css'
 
 interface Props {
   formProps: InputFormProps
@@ -16,12 +15,13 @@ const Checkbox = ({ formProps }: Props) => {
   const error = form.formState.errors[name]
 
   return (
-    <div className='jtrf-input-container'>
+    <div
+      className={classNames('jtrf-input-container', classes?.inputContainer)}
+    >
       <input
         {...inputProps}
         id={inputProps.name}
         type='checkbox'
-        onChange={console.log}
         className={classNames(
           'jtrf-input-container__input',
           'jtrf-input-container__input--checkbox',
@@ -35,29 +35,7 @@ const Checkbox = ({ formProps }: Props) => {
       <label htmlFor={inputProps.name}>
         <HtmlParser html={text} style={{ marginLeft: '16px' }} />
       </label>
-      {error && (
-        <div
-          className={classNames(
-            'jtrf-input-container__error-container',
-            classes?.errorContainer
-          )}
-        >
-          <ErrorSVG
-            className={classNames(
-              'jtrf-input-container__error-icon',
-              classes?.errorIcon
-            )}
-          />
-          <span
-            className={classNames(
-              'jtrf-input-container__error-message',
-              classes?.errorMessage
-            )}
-          >
-            {error.message}
-          </span>
-        </div>
-      )}
+      <ErrorContainer error={error} classes={classes} />
     </div>
   )
 }

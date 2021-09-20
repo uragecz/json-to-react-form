@@ -24,7 +24,7 @@ npm install --save json-to-react-form
 
 ```tsx
 // registrationForm.json
-[
+;[
   {
     component: 'TextInput',
     name: 'email',
@@ -203,7 +203,7 @@ It contains basic props that needs to be passed into input / button. If you are 
 ```tsx
 {
   // If it's not specified, it renders just div, usually there is also added children prop, that renders another inputs
-  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'SelectInput' | 'Button',
+  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'RadioButton' | 'SelectInput' | 'Button',
   // Usually is used with "conditionalChildrenRender" or when "component" is not defined
   children?: Item[],
   // Every input that has specified "component" needs to have "name"
@@ -230,6 +230,14 @@ SelectInput:
 ```tsx
 {
   options: { label: string, value: any }[] | { label: string, options: { label: string, value: any }[] }[]
+}
+```
+
+RadioButton:
+
+```tsx
+{
+  options: { label: string, value: any }[]
 }
 ```
 

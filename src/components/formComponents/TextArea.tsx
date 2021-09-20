@@ -1,9 +1,9 @@
 import React from 'react'
 import { InputFormProps } from '../../types'
-import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
 import classNames from 'classnames'
 
 import './input.css'
+import ErrorContainer from './ErrorContainer'
 
 interface Props {
   formProps: InputFormProps
@@ -11,11 +11,13 @@ interface Props {
 
 const TextArea = ({ formProps }: Props) => {
   const rows = 5
-  const { inputProps, form , classes } = formProps
+  const { inputProps, form, classes } = formProps
   const error = form.formState.errors[inputProps.name]
 
   return (
-    <div className='jtrf-input-container'>
+    <div
+      className={classNames('jtrf-input-container', classes?.inputContainer)}
+    >
       <textarea
         {...inputProps}
         className={classNames(
@@ -30,29 +32,7 @@ const TextArea = ({ formProps }: Props) => {
         style={{ height: `${rows * 30}px` }}
         rows={rows}
       />
-      {error && (
-        <div
-          className={classNames(
-            'jtrf-input-container__error-container',
-            classes?.errorContainer
-          )}
-        >
-          <ErrorSVG
-            className={classNames(
-              'jtrf-input-container__error-icon',
-              classes?.errorIcon
-            )}
-          />
-          <span
-            className={classNames(
-              'jtrf-input-container__error-message',
-              classes?.errorMessage
-            )}
-          >
-            {error.message}
-          </span>
-        </div>
-      )}
+      <ErrorContainer error={error} classes={classes} />
     </div>
   )
 }

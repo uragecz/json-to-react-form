@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { InputFormProps } from '../../types'
-import { ReactComponent as ErrorSVG } from '../../icons/error.svg'
 import { ReactComponent as ShowSVG } from '../../icons/eye.svg'
 import classNames from 'classnames'
-
 import './input.css'
+import ErrorContainer from './ErrorContainer'
 
 interface Props {
   formProps: InputFormProps
@@ -17,7 +16,9 @@ const TextInput = ({ formProps }: Props) => {
   const error = form.formState.errors[name]
 
   return (
-    <div className='jtrf-input-container'>
+    <div
+      className={classNames('jtrf-input-container', classes?.inputContainer)}
+    >
       <input
         {...inputProps}
         className={classNames(
@@ -45,29 +46,7 @@ const TextInput = ({ formProps }: Props) => {
           <ShowSVG />
         </button>
       )}
-      {error && (
-        <div
-          className={classNames(
-            'jtrf-input-container__error-container',
-            classes?.errorContainer
-          )}
-        >
-          <ErrorSVG
-            className={classNames(
-              'jtrf-input-container__error-icon',
-              classes?.errorIcon
-            )}
-          />
-          <span
-            className={classNames(
-              'jtrf-input-container__error-message',
-              classes?.errorMessage
-            )}
-          >
-            {error.message}
-          </span>
-        </div>
-      )}
+      <ErrorContainer error={error} classes={classes} />
     </div>
   )
 }
