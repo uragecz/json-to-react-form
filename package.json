@@ -27,7 +27,6 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "^11.3.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -36,7 +35,6 @@
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
     "@types/sanitize-html": "^1.27.1",
-    "@types/styled-system": "^5.1.10",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
@@ -64,9 +62,7 @@
     "dist"
   ],
   "dependencies": {
-    "@emotion/react": "^11.1.5",
     "classnames": "^2.3.1",
-    "rambda": "^6.7.0",
     "react-hook-form": "^7.7.1",
     "sanitize-html": "^2.3.2"
   }

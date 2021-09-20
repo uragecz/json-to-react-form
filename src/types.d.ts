@@ -140,6 +140,7 @@ export interface GroupOption {
 }
 
 interface Classes {
+  inputContainer?: string
   input?: string
   inputError?: string
   pswdButton?: string
@@ -166,6 +167,8 @@ export interface ButtonFormProps extends FormProps {
 export interface InputFormProps extends FormProps {
   inputProps: InputProps
 
+  // for radio button (select options are included in inputProps)
+  options?: Option[]
   // for checkbox
   text?: string
 }

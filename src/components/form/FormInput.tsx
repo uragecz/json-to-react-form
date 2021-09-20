@@ -144,6 +144,19 @@ const FormInput = ({
           text
         }
       }
+      case 'RadioButton': {
+        return {
+          options,
+          inputProps: {
+            ...formInputProps,
+            onChange: (e: ChangeEvent<HTMLInputElement>) => {
+              onInputChange?.(e, inputName)
+              formInputProps.onChange(e)
+            }
+          },
+          text
+        }
+      }
       default: {
         return {}
       }

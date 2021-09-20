@@ -44,6 +44,16 @@
     }
   },
   {
+    "component": "RadioButton",
+    "name": "asdasd",
+    "order": 1,
+    "label": "Gender",
+    "options": [
+      { "label": "Male", "value": "male" },
+      { "label": "Female", "value": "female" }
+    ]
+  },
+  {
     "component": "Checkbox",
     "name": "agreement",
     "order": 1.1,
